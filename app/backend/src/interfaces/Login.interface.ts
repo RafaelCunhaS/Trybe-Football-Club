@@ -3,7 +3,7 @@ export interface ILogin {
   password: string;
 }
 
-type LoginReturn = {
+export type LoginReturn = {
   id: number;
   email: string;
   role: string;
