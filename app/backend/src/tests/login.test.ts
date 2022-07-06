@@ -4,14 +4,12 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
-import Users from '../database/models/Users';
+import Users from '../database/models/User.model';
 import { Response } from 'superagent';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
-
-interface token { token: string };
 
 describe('Seu teste', () => {
   const user = {
