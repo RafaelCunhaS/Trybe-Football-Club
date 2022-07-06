@@ -4,42 +4,52 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
-import Example from '../database/models/ExampleModel';
-
+import Users from '../database/models/Users';
 import { Response } from 'superagent';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
 
+interface token { token: string };
+
 describe('Seu teste', () => {
-  /**
-   * Exemplo do uso de stubs com tipos
-   */
+  const user = {
+    id: 999,
+    username: 'John',
+    role: 'manager',
+    email: 'test@example.com',
+    password: 'encryptedPassword'
+  }
 
-  // let chaiHttpResponse: Response;
+  before(async () => {
+    sinon
+      .stub(Users, 'findOne').resolves(user as Users);
+  });
 
-  // before(async () => {
-  //   sinon
-  //     .stub(Example, "findOne")
-  //     .resolves({
-  //       ...<Seu mock>
-  //     } as Example);
-  // });
+  after(()=>{
+    (Users.findOne as sinon.SinonStub).restore();
+  })
 
-  // after(()=>{
-  //   (Example.findOne as sinon.SinonStub).restore();
-  // })
+  describe('caso a requisição seja resolvida com sucesso', () => {
+    let chaiHttpResponse: Response;
+    const user = {
+      email: 'test@example.com',
+      password: 'encryptedPassword'
+    }
 
-  // it('...', async () => {
-  //   chaiHttpResponse = await chai
-  //      .request(app)
-  //      ...
+    before( async () => {
+      chaiHttpResponse = await chai.request(app).post('/login').send(user);
+    });
 
-  //   expect(...)
-  // });
-
-  it('Seu sub-teste', () => {
-    expect(false).to.be.eq(true);
+    it('deve retornar código de status 200', () => {
+      expect(chaiHttpResponse).to.have.status(200);
+    });
+    it('o corpo da resposta deve ser um objeto', () => {
+      expect(chaiHttpResponse.body).to.be.a('object');
+    });
+    it('o objeto deve possuir a chave "token"', () => {
+      expect(chaiHttpResponse.body).to.have.key('token');
+    });
   });
 });
