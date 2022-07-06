@@ -1,4 +1,6 @@
 import * as express from 'express';
+import 'express-async-errors';
+import loginFactory from './factories/loginFactory';
 
 class App {
   public app: express.Express;
@@ -19,6 +21,8 @@ class App {
       res.header('Access-Control-Allow-Headers', '*');
       next();
     };
+
+    this.app.post('/login', (req, res) => loginFactory().checkUser(req, res));
 
     this.app.use(express.json());
     this.app.use(accessControl);
