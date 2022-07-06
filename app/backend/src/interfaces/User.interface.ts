@@ -7,5 +7,5 @@ export interface IUser {
 }
 
 export interface IUserModel {
-  findOne(email: string): Promise<IUser>
+  getByEmail(email: string): Promise<IUser | null>
 }
