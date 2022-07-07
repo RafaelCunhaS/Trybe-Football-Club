@@ -32,7 +32,7 @@ class App {
 
     this.app.post('/login', loginValidation, (req, res) => loginFactory().userLogin(req, res));
 
-    this.app.post(
+    this.app.get(
       '/login/validate',
       authToken,
       (req, res) => LoginController.validateUser(req, res),
