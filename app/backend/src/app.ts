@@ -1,6 +1,7 @@
 import * as express from 'express';
 import 'express-async-errors';
 import loginFactory from './factories/loginFactory';
+import errorMiddleware from './middlewares/errorMiddleware';
 
 class App {
   public app: express.Express;
@@ -19,10 +20,13 @@ class App {
       res.header('Access-Control-Allow-Origin', '*');
       res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS,PUT,PATCH');
       res.header('Access-Control-Allow-Headers', '*');
+
+      this.app.post('/login', (req) => loginFactory().validateUser(req, res));
+
+      this.app.use(errorMiddleware);
+
       next();
     };
-
-    this.app.post('/login', (req, res) => loginFactory().checkUser(req, res));
 
     this.app.use(express.json());
     this.app.use(accessControl);

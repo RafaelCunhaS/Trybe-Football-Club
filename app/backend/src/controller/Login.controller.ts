@@ -6,7 +6,7 @@ import { ILoginService } from '../interfaces/Login.interface';
 export default class LoginController {
   constructor(private loginService: ILoginService) { }
 
-  async checkUser(req: Request, res: Response) {
+  async validateUser(req: Request, res: Response) {
     const { id, role, email } = await this.loginService.validateUser(req.body);
 
     const token = new Token().generate(id, role, email);
