@@ -2,6 +2,7 @@ import * as express from 'express';
 import 'express-async-errors';
 import loginFactory from './factories/loginFactory';
 import errorMiddleware from './middlewares/errorMiddleware';
+import loginValidation from './middlewares/loginValidation';
 
 class App {
   public app: express.Express;
@@ -21,15 +22,15 @@ class App {
       res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS,PUT,PATCH');
       res.header('Access-Control-Allow-Headers', '*');
 
-      this.app.post('/login', (req) => loginFactory().validateUser(req, res));
-
-      this.app.use(errorMiddleware);
-
       next();
     };
 
     this.app.use(express.json());
     this.app.use(accessControl);
+
+    this.app.post('/login', loginValidation, (req, res) => loginFactory().validateUser(req, res));
+
+    this.app.use(errorMiddleware);
   }
 
   public start(PORT: string | number):void {
