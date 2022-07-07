@@ -10,5 +10,5 @@ export type LoginReturn = {
 };
 
 export interface ILoginService {
-  validateUser(data: ILogin): Promise<LoginReturn>
+  userLogin(data: ILogin): Promise<LoginReturn>
 }

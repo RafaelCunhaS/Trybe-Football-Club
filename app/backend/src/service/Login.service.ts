@@ -6,7 +6,7 @@ import { IUserModel } from '../interfaces/User.interface';
 export default class LoginService implements ILoginService {
   constructor(private _model: IUserModel) {}
 
-  async validateUser(data: ILogin): Promise<LoginReturn> {
+  async userLogin(data: ILogin): Promise<LoginReturn> {
     const user = await this._model.getByEmail(data.email);
 
     if (!user || user.password !== data.password) {

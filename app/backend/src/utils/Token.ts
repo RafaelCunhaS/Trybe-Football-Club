@@ -13,9 +13,9 @@ export default class Token {
     };
   }
 
-  public generate(userId: number, role: string, email: string): string {
+  public generate(userId: number, role: string): string {
     return jwt.sign(
-      { data: { userId, email } },
+      { data: { userId, role } },
       (process.env.JWT_SECRET as Secret),
       this._jwtConfig,
     );
