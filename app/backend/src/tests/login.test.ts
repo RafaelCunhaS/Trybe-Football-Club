@@ -11,51 +11,86 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Seu teste', () => {
-  describe('caso todas informações não forem passadas corretamente', () => {
+describe('Tests POST mothod for /login', () => {
+  describe('if the request is made with a invalid email', () => {
     let chaiHttpResponse: Response;
 
-    before( async () => {
+    it('it should return the status code 400', async () => {
+      chaiHttpResponse = await chai.request(app).post('/login').send({
+        email: "n.on@exis@tent.com",
+        password: "123321"
+      });
+  
+      expect(chaiHttpResponse).to.have.status(400);
+    });
+    it('the body should return an object', () => {
+      expect(chaiHttpResponse.body).to.be.a('object');
+    });
+    it('the object must have the key "message"', () => {
+      expect(chaiHttpResponse.body).to.have.key('message');
+    });
+    it('"message" should have the error message "All fields must be filled"', () => {
+      expect(chaiHttpResponse.body.message).to.be.equal('All fields must be filled');
+    });
+  });
+
+  describe('if the request is made with a invalid password', () => {
+    let chaiHttpResponse: Response;
+
+    it('it should return the status code 400', async () => {
+      chaiHttpResponse = await chai.request(app).post('/login').send({
+        email: "test@example.com",
+        password: "1234"
+      });
+  
+      expect(chaiHttpResponse).to.have.status(400);
+    });
+    it('the body should return an object', () => {
+      expect(chaiHttpResponse.body).to.be.a('object');
+    });
+    it('the object must have the key "message"', () => {
+      expect(chaiHttpResponse.body).to.have.key('message');
+    });
+    it('"message" should have the error message "All fields must be filled"', () => {
+      expect(chaiHttpResponse.body.message).to.be.equal('All fields must be filled');
+    });
+  });
+
+  describe('if the email isn\'t registered', () => {
+    let chaiHttpResponse: Response;
+
+    before(() => {
+      sinon
+        .stub(Users, 'findOne').resolves(null);
+    });
+  
+    after(()=>{
+      (Users.findOne as sinon.SinonStub).restore();
+    })
+
+    it('it should return the status code 401', async () => {
       chaiHttpResponse = await chai.request(app).post('/login').send({
         email: "non@existent.com",
         password: "123321"
       });
-    });
-
-    before(async () => {
-      sinon
-        .stub(Users, 'findOne').resolves(null);
-    });
   
-    after(()=>{
-      (Users.findOne as sinon.SinonStub).restore();
-    })
-
-    it('deve retornar código de status 401', () => {
       expect(chaiHttpResponse).to.have.status(401);
     });
-    it('o corpo deve retornar um objeto', () => {
+    it('the body should return an object', () => {
       expect(chaiHttpResponse.body).to.be.a('object');
     });
-    it('o objeto deve possuir a chave "message"', () => {
+    it('the object must have the key "message"', () => {
       expect(chaiHttpResponse.body).to.have.key('message');
     });
-    it('o objeto deve possuir uma menssagem de erro "Some required fields are missing"', () => {
+    it('"message" should have the error message "Incorrect email or password"', () => {
       expect(chaiHttpResponse.body.message).to.be.equal('Incorrect email or password');
     });
   });
 
-  describe('caso o usuário não exista no BD', () => {
+  describe('if the password is incorrect', () => {
     let chaiHttpResponse: Response;
 
-    before( async () => {
-      chaiHttpResponse = await chai.request(app).post('/login').send({
-        email: "test@example.com",
-        password: "123321"
-      });
-    });
-
-    before(async () => {
+    before(() => {
       sinon
         .stub(Users, 'findOne').resolves(null);
     });
@@ -64,21 +99,26 @@ describe('Seu teste', () => {
       (Users.findOne as sinon.SinonStub).restore();
     })
 
-    it('deve retornar código de status 401', () => {
+    it('it should return the status code 401', async () => {
+      chaiHttpResponse = await chai.request(app).post('/login').send({
+        email: "test@example.com",
+        password: "invalidPassword"
+      });
+
       expect(chaiHttpResponse).to.have.status(401);
     });
-    it('o corpo deve retornar um objeto', () => {
+    it('the body should return an object', () => {
       expect(chaiHttpResponse.body).to.be.a('object');
     });
-    it('o objeto deve possuir a chave "message"', () => {
+    it('the object must have the key "message"', () => {
       expect(chaiHttpResponse.body).to.have.key('message');
     });
-    it('o objeto deve possuir uma menssagem de erro "Invalid fields"', () => {
+    it('"message" should have the error message "Incorrect email or password"', () => {
       expect(chaiHttpResponse.body.message).to.be.equal('Incorrect email or password');
     });
   });
 
-  describe('caso a requisição seja resolvida com sucesso', () => {
+  describe('if the request is resolved with success', () => {
     let chaiHttpResponse: Response;
     const userInfo = {
       id: 999,
@@ -92,7 +132,7 @@ describe('Seu teste', () => {
       password: 'encryptedPassword'
     }
   
-    before(async () => {
+    before(() => {
       sinon
         .stub(Users, 'findOne').resolves(userInfo as Users);
     });
@@ -101,17 +141,15 @@ describe('Seu teste', () => {
       (Users.findOne as sinon.SinonStub).restore();
     })
 
-    before( async () => {
+    it('it should return the status code 200', async () => {
       chaiHttpResponse = await chai.request(app).post('/login').send(loginUser);
-    });
-
-    it('deve retornar código de status 200', () => {
+      
       expect(chaiHttpResponse).to.have.status(200);
     });
-    it('o corpo da resposta deve ser um objeto', () => {
+    it('the body should return an object', () => {
       expect(chaiHttpResponse.body).to.be.a('object');
     });
-    it('o objeto deve possuir a chave "token"', () => {
+    it('the object must have the key "token"', () => {
       expect(chaiHttpResponse.body).to.have.key('token');
     });
   });
