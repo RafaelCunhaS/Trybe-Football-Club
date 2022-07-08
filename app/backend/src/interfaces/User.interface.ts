@@ -1,11 +1,5 @@
-export interface IUser {
-  id: number;
-  username: string;
-  role: string;
-  email: string;
-  password: string;
-}
+import User from '../database/models/User.model';
 
 export interface IUserModel {
-  getByEmail(email: string): Promise<IUser | null>
+  getByEmail(email: string): Promise<User | null>
 }
