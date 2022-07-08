@@ -2,6 +2,7 @@ import * as express from 'express';
 import 'express-async-errors';
 import LoginController from './controller/Login.controller';
 import loginFactory from './factories/loginFactory';
+import matchesFactory from './factories/matchesFactory';
 import teamsFactory from './factories/teamsFactory';
 import authToken from './middlewares/authToken';
 import errorMiddleware from './middlewares/errorMiddleware';
@@ -43,7 +44,7 @@ class App {
 
     this.app.get('/teams/:id', (req, res) => teamsFactory().getById(req, res));
 
-    this.app.get('/matches', (req, res) => teamsFactory().getById(req, res));
+    this.app.get('/matches', (req, res) => matchesFactory().getAll(req, res));
 
     this.app.use(errorMiddleware);
   }

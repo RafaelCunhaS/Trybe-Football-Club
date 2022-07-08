@@ -10,9 +10,9 @@ export interface returnedMatch extends Match {
 }
 
 export interface IMatchModel {
-  getAll(query: string): Promise<returnedMatch[]>
+  getAll(inProgress: boolean | undefined): Promise<returnedMatch[]>
 }
 
 export interface IMatchService {
-  getAll(query: string): Promise<returnedMatch[]>
+  getAll(query: boolean | undefined): Promise<returnedMatch[]>
 }

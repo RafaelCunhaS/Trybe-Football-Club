@@ -7,7 +7,11 @@ export default class MatchController {
 
   async getAll(req: Request, res: Response) {
     const { inProgress } = req.query;
-    const matches = await this._service.getAll(inProgress as string);
+    let query;
+    if (inProgress === 'true') query = true;
+    if (inProgress === 'false') query = false;
+
+    const matches = await this._service.getAll(query as boolean | undefined);
 
     res.status(StatusCodes.OK).json(matches);
   }
