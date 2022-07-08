@@ -10,4 +10,11 @@ export default class TeamController {
 
     res.status(StatusCodes.OK).json(teams);
   }
+
+  async getById(req: Request, res: Response) {
+    const { id } = req.params;
+    const team = await this._service.getById(Number(id));
+
+    res.status(StatusCodes.OK).json(team);
+  }
 }

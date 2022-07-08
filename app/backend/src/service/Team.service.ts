@@ -11,4 +11,10 @@ export default class TeamService implements ITeamService {
 
     return teams;
   }
+
+  async getById(id: number): Promise<Team | null> {
+    const team = await this._model.getById(id);
+
+    return team;
+  }
 }
