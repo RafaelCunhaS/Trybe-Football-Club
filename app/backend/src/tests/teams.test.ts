@@ -12,7 +12,7 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('Tests GET method for /teams', () => {
-  describe('if the request is made with a invalid email', () => {
+  describe('if the request is successful', () => {
     let chaiHttpResponse: Response;
     const teams = [
       {
@@ -41,7 +41,7 @@ describe('Tests GET method for /teams', () => {
     it('the body should return an array', () => {
       expect(chaiHttpResponse.body).to.be.an('array');
     });
-    it('the array length must be of all teams in the DB', () => {
+    it('the array must contain all teams in the DB', () => {
       expect(chaiHttpResponse.body).to.have.length(3);
     });
   });
