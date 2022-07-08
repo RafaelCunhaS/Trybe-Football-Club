@@ -43,6 +43,8 @@ class App {
 
     this.app.get('/teams/:id', (req, res) => teamsFactory().getById(req, res));
 
+    this.app.get('/matches', (req, res) => teamsFactory().getById(req, res));
+
     this.app.use(errorMiddleware);
   }
 
