@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 import * as jwt from 'jsonwebtoken';
-import { Secret } from 'jsonwebtoken';
+// import { Secret } from 'jsonwebtoken';
 
 dotenv.config();
 
@@ -16,7 +16,7 @@ export default class Token {
   public generate(userId: number, role: string): string {
     return jwt.sign(
       { data: { userId, role } },
-      (process.env.JWT_SECRET as Secret),
+      (process.env.JWT_SECRET as string),
       this._jwtConfig,
     );
   }
