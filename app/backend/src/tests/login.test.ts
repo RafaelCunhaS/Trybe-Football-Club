@@ -4,14 +4,14 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
-import Users from '../database/models/User.model';
+import User from '../database/models/User.model';
 import { Response } from 'superagent';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Tests POST mothod for /login', () => {
+describe('Tests POST method for /login', () => {
   describe('if the request is made with a invalid email', () => {
     let chaiHttpResponse: Response;
 
@@ -24,7 +24,7 @@ describe('Tests POST mothod for /login', () => {
       expect(chaiHttpResponse).to.have.status(400);
     });
     it('the body should return an object', () => {
-      expect(chaiHttpResponse.body).to.be.a('object');
+      expect(chaiHttpResponse.body).to.be.an('object');
     });
     it('the object must have the key "message"', () => {
       expect(chaiHttpResponse.body).to.have.key('message');
@@ -46,7 +46,7 @@ describe('Tests POST mothod for /login', () => {
       expect(chaiHttpResponse).to.have.status(400);
     });
     it('the body should return an object', () => {
-      expect(chaiHttpResponse.body).to.be.a('object');
+      expect(chaiHttpResponse.body).to.be.an('object');
     });
     it('the object must have the key "message"', () => {
       expect(chaiHttpResponse.body).to.have.key('message');
@@ -61,11 +61,11 @@ describe('Tests POST mothod for /login', () => {
 
     before(() => {
       sinon
-        .stub(Users, 'findOne').resolves(null);
+        .stub(User, 'findOne').resolves(null);
     });
   
     after(()=>{
-      (Users.findOne as sinon.SinonStub).restore();
+      (User.findOne as sinon.SinonStub).restore();
     })
 
     it('it should return the status code 401', async () => {
@@ -77,7 +77,7 @@ describe('Tests POST mothod for /login', () => {
       expect(chaiHttpResponse).to.have.status(401);
     });
     it('the body should return an object', () => {
-      expect(chaiHttpResponse.body).to.be.a('object');
+      expect(chaiHttpResponse.body).to.be.an('object');
     });
     it('the object must have the key "message"', () => {
       expect(chaiHttpResponse.body).to.have.key('message');
@@ -92,11 +92,11 @@ describe('Tests POST mothod for /login', () => {
 
     before(() => {
       sinon
-        .stub(Users, 'findOne').resolves(null);
+        .stub(User, 'findOne').resolves(null);
     });
   
     after(()=>{
-      (Users.findOne as sinon.SinonStub).restore();
+      (User.findOne as sinon.SinonStub).restore();
     })
 
     it('it should return the status code 401', async () => {
@@ -108,7 +108,7 @@ describe('Tests POST mothod for /login', () => {
       expect(chaiHttpResponse).to.have.status(401);
     });
     it('the body should return an object', () => {
-      expect(chaiHttpResponse.body).to.be.a('object');
+      expect(chaiHttpResponse.body).to.be.an('object');
     });
     it('the object must have the key "message"', () => {
       expect(chaiHttpResponse.body).to.have.key('message');
@@ -134,11 +134,11 @@ describe('Tests POST mothod for /login', () => {
   
     before(() => {
       sinon
-        .stub(Users, 'findOne').resolves(userInfo as Users);
+        .stub(User, 'findOne').resolves(userInfo as User);
     });
   
     after(()=>{
-      (Users.findOne as sinon.SinonStub).restore();
+      (User.findOne as sinon.SinonStub).restore();
     })
 
     it('it should return the status code 200', async () => {
@@ -147,7 +147,7 @@ describe('Tests POST mothod for /login', () => {
       expect(chaiHttpResponse).to.have.status(200);
     });
     it('the body should return an object', () => {
-      expect(chaiHttpResponse.body).to.be.a('object');
+      expect(chaiHttpResponse.body).to.be.an('object');
     });
     it('the object must have the key "token"', () => {
       expect(chaiHttpResponse.body).to.have.key('token');
