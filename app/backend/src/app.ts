@@ -2,6 +2,7 @@ import * as express from 'express';
 import 'express-async-errors';
 import LoginController from './controller/Login.controller';
 import loginFactory from './factories/loginFactory';
+import teamsFactory from './factories/teamsFactory';
 import authToken from './middlewares/authToken';
 import errorMiddleware from './middlewares/errorMiddleware';
 import loginValidation from './middlewares/loginValidation';
@@ -30,13 +31,15 @@ class App {
     this.app.use(express.json());
     this.app.use(accessControl);
 
-    this.app.post('/login', loginValidation, (req, res) => loginFactory().userLogin(req, res));
-
     this.app.get(
       '/login/validate',
       authToken,
       (req, res) => LoginController.validateUser(req, res),
     );
+
+    this.app.post('/login', loginValidation, (req, res) => loginFactory().userLogin(req, res));
+
+    this.app.get('/teams', (req, res) => teamsFactory().getAll(req, res));
 
     this.app.use(errorMiddleware);
   }
