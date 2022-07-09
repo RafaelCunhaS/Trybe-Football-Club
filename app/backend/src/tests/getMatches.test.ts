@@ -12,7 +12,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe.only('Tests GET method for /matches', () => {
+describe('Tests GET method for /matches', () => {
   describe('if the request is successful', () => {
     let chaiHttpResponse: Response;
     const matches = [
