@@ -15,4 +15,10 @@ export default class MatchController {
 
     res.status(StatusCodes.OK).json(matches);
   }
+
+  async create(req: Request, res: Response) {
+    const createdMatch = await this._service.create(req.body);
+
+    res.status(StatusCodes.CREATED).json(createdMatch);
+  }
 }

@@ -1,3 +1,4 @@
+import Match from '../database/models/Match.model';
 import { IMatchModel, IMatchService, returnedMatch } from '../interfaces/Match.interface';
 
 export default class MatchService implements IMatchService {
@@ -7,5 +8,10 @@ export default class MatchService implements IMatchService {
     const matches = await this._model.getAll(query);
 
     return matches;
+  }
+
+  async create(data: Omit<Match, 'id' | 'inProgress'>): Promise<Match> {
+    const createdMatch = await this._model.create(data);
+    return createdMatch;
   }
 }

@@ -26,4 +26,9 @@ export default class MatchRepository implements IMatchModel {
 
     return matches as returnedMatch[];
   }
+
+  async create(data: Omit<Match, 'id' | 'inProgress'>): Promise<Match> {
+    const createdMatch = this._model.create(data);
+    return createdMatch;
+  }
 }
