@@ -1,6 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import { Request, Response } from 'express';
 import { IMatchService } from '../interfaces/Match.interface';
+import ErrorHandler from '../utils/ErrorHandler';
 
 export default class MatchController {
   constructor(private _service: IMatchService) {}
@@ -17,6 +18,15 @@ export default class MatchController {
   }
 
   async create(req: Request, res: Response) {
+    const { homeTeam, awayTeam } = req.body;
+
+    if (homeTeam === awayTeam) {
+      throw new ErrorHandler(
+        StatusCodes.UNAUTHORIZED,
+        'It is not possible to create a match with two equal teams',
+      );
+    }
+
     const createdMatch = await this._service.create(req.body);
 
     res.status(StatusCodes.CREATED).json(createdMatch);
