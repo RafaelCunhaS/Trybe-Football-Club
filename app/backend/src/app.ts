@@ -1,12 +1,9 @@
 import * as express from 'express';
 import 'express-async-errors';
-import LoginController from './controller/Login.controller';
-import loginFactory from './factories/loginFactory';
-import matchesFactory from './factories/matchesFactory';
-import teamsFactory from './factories/teamsFactory';
-import authToken from './middlewares/authToken';
 import errorMiddleware from './middlewares/errorMiddleware';
-import loginValidation from './middlewares/loginValidation';
+import loginRouter from './routes/loginRouter';
+import teamsRouter from './routes/teamsRouter';
+import matchesRouter from './routes/matchesRouter';
 
 class App {
   public app: express.Express;
@@ -32,19 +29,11 @@ class App {
     this.app.use(express.json());
     this.app.use(accessControl);
 
-    this.app.get(
-      '/login/validate',
-      authToken,
-      (req, res) => LoginController.validateUser(req, res),
-    );
+    this.app.use('/login', loginRouter);
 
-    this.app.post('/login', loginValidation, (req, res) => loginFactory().userLogin(req, res));
+    this.app.use('/teams', teamsRouter);
 
-    this.app.get('/teams', (req, res) => teamsFactory().getAll(req, res));
-
-    this.app.get('/teams/:id', (req, res) => teamsFactory().getById(req, res));
-
-    this.app.get('/matches', (req, res) => matchesFactory().getAll(req, res));
+    this.app.use('/matches', matchesRouter);
 
     this.app.use(errorMiddleware);
   }
