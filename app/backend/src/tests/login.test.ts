@@ -125,11 +125,11 @@ describe('Tests POST method for /login', () => {
       username: 'John',
       role: 'manager',
       email: 'test@example.com',
-      password: 'encryptedPassword'
+      password: '$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW'
     }
     const loginUser = {
       email: 'test@example.com',
-      password: 'encryptedPassword'
+      password: 'secret_admin'
     }
   
     before(() => {

@@ -5,9 +5,9 @@ import Team from './Team.model';
 class Match extends Model {
   public id!: number;
   public homeTeam!: number;
-  public homeTeamGoals!: string;
+  public homeTeamGoals!: number;
   public awayTeam!: number;
-  public awayTeamGoals!: string;
+  public awayTeamGoals!: number;
   public inProgress!: boolean;
 }
 
@@ -22,7 +22,7 @@ Match.init({
     allowNull: false,
   },
   homeTeamGoals: {
-    type: DataTypes.STRING,
+    type: DataTypes.NUMBER,
     allowNull: false,
   },
   awayTeam: {
@@ -30,7 +30,7 @@ Match.init({
     allowNull: false,
   },
   awayTeamGoals: {
-    type: DataTypes.STRING,
+    type: DataTypes.NUMBER,
     allowNull: false,
   },
   inProgress: {

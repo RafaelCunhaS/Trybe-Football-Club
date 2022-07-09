@@ -12,10 +12,10 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Tests GET method for /matches', () => {
+describe.only('Tests GET method for /matches', () => {
   describe('if the request is successful', () => {
     let chaiHttpResponse: Response;
-    const Matches = [
+    const matches = [
       {
         "id": 1,
         "homeTeam": 16,
@@ -46,12 +46,12 @@ describe('Tests GET method for /matches', () => {
       }
     ]
 
-    before(() => sinon.stub(Match, 'findAll').resolves(Matches as returnedMatch[]));
+    before(() => sinon.stub(Match, 'findAll').resolves(matches as returnedMatch[]));
 
     after(() => (Match.findAll as sinon.SinonStub).restore())
 
     it('it should return the status code 200', async () => {
-      chaiHttpResponse = await chai.request(app).get('/Matchs');
+      chaiHttpResponse = await chai.request(app).get('/matches');
   
       expect(chaiHttpResponse).to.have.status(200);
     });
@@ -101,7 +101,7 @@ describe('Tests GET method for /matches', () => {
     after(() => (Match.findAll as sinon.SinonStub).restore())
 
     it('it should return the status code 200', async () => {
-      chaiHttpResponse = await chai.request(app).get('/Matchs')
+      chaiHttpResponse = await chai.request(app).get('/matches')
         .query({ inProgress: true });
   
       expect(chaiHttpResponse).to.have.status(200);
@@ -154,7 +154,7 @@ describe('Tests GET method for /matches', () => {
     after(() => (Match.findAll as sinon.SinonStub).restore())
 
     it('it should return the status code 200', async () => {
-      chaiHttpResponse = await chai.request(app).get('/Matchs')
+      chaiHttpResponse = await chai.request(app).get('/matches')
         .query({ inProgress: false });
   
       expect(chaiHttpResponse).to.have.status(200);
@@ -162,7 +162,7 @@ describe('Tests GET method for /matches', () => {
     it('the body should return an array', () => {
       expect(chaiHttpResponse.body).to.be.an('array');
     });
-    it('the array must contain only the ongoing matches', () => {
+    it('the array must contain only the ended matches', () => {
       chaiHttpResponse.body.forEach((match: returnedMatch) => {
         expect(match.inProgress).to.be.false;
       });
