@@ -13,7 +13,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe.only('Tests POST method for /matches', () => {
+describe('Tests POST method for /matches', () => {
   describe('if the request is made with a invalid token', () => {
     let chaiHttpResponse: Response;
 

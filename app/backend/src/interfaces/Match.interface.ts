@@ -9,14 +9,18 @@ export interface returnedMatch extends Match {
   }
 }
 
+export type TUpdateGoals = Omit<Match, 'id' | 'inProgress' | 'homeTeam' | 'awayTeam'>;
+
 export interface IMatchModel {
   getAll(inProgress: boolean | undefined): Promise<returnedMatch[]>
   create(data: Omit<Match, 'id' | 'inProgress'>): Promise<Match>
-  update(id: number): Promise<void>
+  updateFinished(id: number): Promise<void>
+  updateGoals(id:number, data: TUpdateGoals): Promise<void>
 }
 
 export interface IMatchService {
   getAll(query: boolean | undefined): Promise<returnedMatch[]>
   create(data: Omit<Match, 'id' | 'inProgress'>): Promise<Match>
-  update(id: number): Promise<void>
+  updateFinished(id: number): Promise<void>
+  updateGoals(id:number, data: TUpdateGoals): Promise<void>
 }

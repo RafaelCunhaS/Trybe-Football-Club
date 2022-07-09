@@ -1,7 +1,11 @@
 import { StatusCodes } from 'http-status-codes';
 import { ITeamModel } from '../interfaces/Team.interface';
 import Match from '../database/models/Match.model';
-import { IMatchModel, IMatchService, returnedMatch } from '../interfaces/Match.interface';
+import {
+  IMatchModel,
+  IMatchService,
+  returnedMatch,
+  TUpdateGoals } from '../interfaces/Match.interface';
 import ErrorHandler from '../utils/ErrorHandler';
 
 export default class MatchService implements IMatchService {
@@ -24,7 +28,11 @@ export default class MatchService implements IMatchService {
     return createdMatch;
   }
 
-  async update(id: number): Promise<void> {
-    await this._model.update(id);
+  async updateFinished(id: number): Promise<void> {
+    await this._model.updateFinished(id);
+  }
+
+  async updateGoals(id: number, data: TUpdateGoals): Promise<void> {
+    await this._model.updateGoals(id, data);
   }
 }

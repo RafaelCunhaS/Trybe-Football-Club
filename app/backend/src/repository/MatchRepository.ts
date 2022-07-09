@@ -1,7 +1,7 @@
 // import { Op } from 'sequelize';
 import Team from '../database/models/Team.model';
 import Match from '../database/models/Match.model';
-import { IMatchModel, returnedMatch } from '../interfaces/Match.interface';
+import { IMatchModel, returnedMatch, TUpdateGoals } from '../interfaces/Match.interface';
 
 export default class MatchRepository implements IMatchModel {
   constructor(private _model = Match) { }
@@ -32,7 +32,11 @@ export default class MatchRepository implements IMatchModel {
     return createdMatch;
   }
 
-  async update(id: number): Promise<void> {
+  async updateFinished(id: number): Promise<void> {
     await this._model.update({ inProgress: false }, { where: { id } });
+  }
+
+  async updateGoals(id: number, data: TUpdateGoals): Promise<void> {
+    await this._model.update(data, { where: { id } });
   }
 }
