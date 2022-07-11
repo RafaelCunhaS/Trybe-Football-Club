@@ -24,6 +24,10 @@ It is also possible to create, update or delete (__CRUD__) a match, but only an 
 
     # Build the project (the project will be running on the background when the build is finished)
     $ npm run compose:up
+    
+    # You can use the following email and password for the login to change/create matches
+    $ email: admin@admin.com
+    $ password: secret_admin
 ```
 
 #### The project will be running on your [localhost:3000](http://localhost:3000/)
