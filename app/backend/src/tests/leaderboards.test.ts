@@ -4,7 +4,6 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
-import { ILeaderboard } from '../interfaces/Leaderboard.interface';
 import { Response } from 'superagent';
 import Team from '../database/models/Team.model';
 
@@ -41,7 +40,7 @@ describe('Tests GET method for /leaderboards', () => {
         efficiency: 77.78
       }
     ]
-    const TeamsMatches = [
+    const teamsHomeMatches = [
       {
         "id": 12,
         "teamName": "Palmeiras",
@@ -104,7 +103,7 @@ describe('Tests GET method for /leaderboards', () => {
       }
     ]
 
-    before(() => sinon.stub(Team, 'findAll').resolves(TeamsMatches as Team[]));
+    before(() => sinon.stub(Team, 'findAll').resolves(teamsHomeMatches as Team[]));
 
     after(() => (Team.findAll as sinon.SinonStub).restore())
 
@@ -116,8 +115,108 @@ describe('Tests GET method for /leaderboards', () => {
     it('the body should return an array', () => {
       expect(chaiHttpResponse.body).to.be.an('array');
     });
-    it('the array must contain all the correct info for the leaderboard', () => {
+    it('the array must contain all the correct info for the home leaderboard', () => {
       expect(chaiHttpResponse.body).to.have.eql(homeLeaderboard);
+    });
+  });
+
+  describe('if the route requested is /leaderboards/away', () => {
+    let chaiHttpResponse: Response;
+    const awayLeaderboard = [
+      {
+        name: 'Palmeiras',
+        totalPoints: '6',
+        totalGames: '2',
+        totalVictories: '2',
+        totalDraws: '0',
+        totalLosses: '0',
+        goalsFavor: '7',
+        goalsOwn: '0',
+        goalsBalance: '7',
+        efficiency: '100'
+      },
+      {
+        name: 'Corinthians',
+        totalPoints: '6',
+        totalGames: '3',
+        totalVictories: '2',
+        totalDraws: '0',
+        totalLosses: '1',
+        goalsFavor: '6',
+        goalsOwn: '2',
+        goalsBalance: '4',
+        efficiency: '66.67'
+      }
+    ]
+    const teamsAwayMatches = [
+      {
+        "id": 12,
+        "teamName": "Palmeiras",
+        "teamAway": [
+          {
+            "id": 9,
+            "homeTeam": 1,
+            "homeTeamGoals": 0,
+            "awayTeam": 12,
+            "awayTeamGoals": 3,
+            "inProgress": false
+          },
+          {
+            "id": 30,
+            "homeTeam": 3,
+            "homeTeamGoals": 0,
+            "awayTeam": 12,
+            "awayTeamGoals": 4,
+            "inProgress": false
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "teamName": "Corinthians",
+        "teamAway": [
+          {
+            "id": 12,
+            "homeTeam": 6,
+            "homeTeamGoals": 0,
+            "awayTeam": 4,
+            "awayTeamGoals": 1,
+            "inProgress": false
+          },
+          {
+            "id": 29,
+            "homeTeam": 9,
+            "homeTeamGoals": 0,
+            "awayTeam": 4,
+            "awayTeamGoals": 4,
+            "inProgress": false
+          },
+          {
+            "id": 38,
+            "homeTeam": 14,
+            "homeTeamGoals": 2,
+            "awayTeam": 4,
+            "awayTeamGoals": 1,
+            "inProgress": false
+          }
+        ]
+      },
+    ]
+
+    before(() => sinon.stub(Team, 'findAll').resolves(teamsAwayMatches as Team[]));
+
+    after(() => (Team.findAll as sinon.SinonStub).restore())
+
+    it('it should return the status code 200', async () => {
+      chaiHttpResponse = await chai.request(app).get('/leaderboard/away');
+  
+      expect(chaiHttpResponse).to.have.status(200);
+    });
+    it('the body should return an array', () => {
+      expect(chaiHttpResponse.body).to.be.an('array');
+    });
+    it('the array must contain all the correct info for the away leaderboard', () => {
+      expect(chaiHttpResponse.body).to.have.eql(awayLeaderboard);
     });
   });
 });
