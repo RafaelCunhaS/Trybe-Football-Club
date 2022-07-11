@@ -302,14 +302,6 @@ describe('Tests GET method for /leaderboards', () => {
         "teamName": "Corinthians",
         "teamHome": [
           {
-            "id": 49,
-            "homeTeam": 4,
-            "homeTeamGoals": 2,
-            "awayTeam": 9,
-            "awayTeamGoals": 1,
-            "inProgress": false
-          },
-          {
             "id": 22,
             "homeTeam": 4,
             "homeTeamGoals": 3,

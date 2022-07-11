@@ -40,6 +40,23 @@ IMatchWithTeam[], home: boolean): TMatchesResultsWithTotals => {
   });
 };
 
+export const generalLeaderboard = (homeData: TMatchesResultsWithTotals, awayData:
+TMatchesResultsWithTotals): TMatchesResultsWithTotals => {
+  const homeValues = Object.entries(homeData);
+  const awayValues = Object.entries(awayData);
+  const finalValues = homeValues.map((entrie, index) => {
+    const value = entrie[1] + awayValues[index][1];
+    return [entrie[0], value];
+  });
+  const result = Object.fromEntries(finalValues);
+
+  return ({
+    ...result,
+    goalsBalance: result.goalsFavor - result.goalsOwn,
+    efficiency: Number(((result.totalPoints / (result.totalGames * 3)) * 100).toFixed(2)),
+  });
+};
+
 export const sortLeaderboard = (a: ILeaderboard, b: ILeaderboard) => {
   let result = b.totalPoints - a.totalPoints;
   if (result === 0) result = b.totalVictories - a.totalVictories;

@@ -1,4 +1,4 @@
-import { matchesData, sortLeaderboard } from '../helpers/matchesResults';
+import { generalLeaderboard, matchesData, sortLeaderboard } from '../helpers/matchesResults';
 import Match from '../database/models/Match.model';
 import Team from '../database/models/Team.model';
 import { ILeaderboard, ILeaderboardModel } from '../interfaces/Leaderboard.interface';
@@ -36,18 +36,19 @@ export default class LeaderboardRepository implements ILeaderboardModel {
     return leaderboard.sort((a, b) => sortLeaderboard(a, b));
   }
 
-  // async getAll(): Promise<ILeaderboard[]> {
-  //   const teamsAndMatches = await this._teamModel.findAll({
-  //     include: [
-  //       { model: Match, as: 'teamHome', where: { inProgress: false } },
-  //       { model: Match, as: 'teamAway', where: { inProgress: false } },
-  //     ],
-  //   });
+  async getAll(): Promise<ILeaderboard[]> {
+    const teamsAndMatches = await this._teamModel.findAll({
+      include: [
+        { model: Match, as: 'teamHome', where: { inProgress: false } },
+        { model: Match, as: 'teamAway', where: { inProgress: false } },
+      ],
+    });
 
-  //   return teamsAndMatches.map(({ teamName, teamHome, teamAway }) => ({
-  //     name: teamName,
-  //     ...matchesResults(teamHome, teamAway),
+    const leaderboard = teamsAndMatches.map(({ teamName, teamHome, teamAway }) => ({
+      name: teamName,
+      ...generalLeaderboard(matchesData(teamHome, true), matchesData(teamAway, false)),
+    }));
 
-  //   }))
-  // }
+    return leaderboard.sort((a, b) => sortLeaderboard(a, b));
+  }
 }
