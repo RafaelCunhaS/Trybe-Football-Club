@@ -4,7 +4,7 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
-import { returnedMatch } from '../interfaces/Match.interface';
+import { IReturnedMatch } from '../interfaces/Match.interface';
 import { Response } from 'superagent';
 import Match from '../database/models/Match.model';
 
@@ -46,7 +46,7 @@ describe('Tests GET method for /matches', () => {
       }
     ]
 
-    before(() => sinon.stub(Match, 'findAll').resolves(matches as returnedMatch[]));
+    before(() => sinon.stub(Match, 'findAll').resolves(matches as IReturnedMatch[]));
 
     after(() => (Match.findAll as sinon.SinonStub).restore())
 
@@ -96,7 +96,7 @@ describe('Tests GET method for /matches', () => {
       }
     ]
 
-    before(() => sinon.stub(Match, 'findAll').resolves(ongoingMatches as returnedMatch[]));
+    before(() => sinon.stub(Match, 'findAll').resolves(ongoingMatches as IReturnedMatch[]));
 
     after(() => (Match.findAll as sinon.SinonStub).restore())
 
@@ -110,7 +110,7 @@ describe('Tests GET method for /matches', () => {
       expect(chaiHttpResponse.body).to.be.an('array');
     });
     it('the array must contain only the ongoing matches', () => {
-      chaiHttpResponse.body.forEach((match: returnedMatch) => {
+      chaiHttpResponse.body.forEach((match: IReturnedMatch) => {
         expect(match.inProgress).to.be.true;
       });
     });
@@ -149,7 +149,7 @@ describe('Tests GET method for /matches', () => {
       }
     ]
 
-    before(() => sinon.stub(Match, 'findAll').resolves(endedMatches as returnedMatch[]));
+    before(() => sinon.stub(Match, 'findAll').resolves(endedMatches as IReturnedMatch[]));
 
     after(() => (Match.findAll as sinon.SinonStub).restore())
 
@@ -163,7 +163,7 @@ describe('Tests GET method for /matches', () => {
       expect(chaiHttpResponse.body).to.be.an('array');
     });
     it('the array must contain only the ended matches', () => {
-      chaiHttpResponse.body.forEach((match: returnedMatch) => {
+      chaiHttpResponse.body.forEach((match: IReturnedMatch) => {
         expect(match.inProgress).to.be.false;
       });
     });
