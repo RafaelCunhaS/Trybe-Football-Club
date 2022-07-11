@@ -5,7 +5,7 @@ Back-end project made while studying at Trybe, a web development school.
 The _TFC_ is an informational site about football matches and rankings.
 On the development of this project I was responsible for developing an API (in a __TDD__ way) and also integrate (through __docker-compose__) both front and back-ends so they work toghether consuming a database(_MySQL_).
 
-The front-end was ready, so my function was to work on the back-end modeling the database with __Sequelize__, with a __RESTful__ API so that the front could consume my endpoints properly and make sure some business rules were complied.
+The front-end was ready, so my function was to work on the back-end modeling the database with __Sequelize__, __TypeScript__ and __OOP__, with a __RESTful__ API so that the front could consume my endpoints properly and make sure some business rules were complied.
 
 It is also possible to create, update or delete (__CRUD__) a match, but only an administrator is able to do so, and a token(__jsonwebtoken__) is required, therefore the person needs to be logged on to be able to make these changes.
 
