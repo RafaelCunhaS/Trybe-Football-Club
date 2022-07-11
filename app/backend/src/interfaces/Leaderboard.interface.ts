@@ -13,8 +13,10 @@ export interface ILeaderboard {
 
 export interface ILeaderboardModel {
   getHomeLeaderboard(): Promise<ILeaderboard[]>
+  getAwayLeaderboard(): Promise<ILeaderboard[]>
 }
 
 export interface ILeaderboardService {
   getHomeLeaderboard(): Promise<ILeaderboard[]>
+  getAwayLeaderboard(): Promise<ILeaderboard[]>
 }

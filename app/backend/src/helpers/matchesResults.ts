@@ -1,5 +1,6 @@
 import { TMatchesResultsWithTotals, TMatchesResults } from '../types/matchesResults.type';
 import { IMatchWithTeam } from '../interfaces/Match.interface';
+import { ILeaderboard } from '../interfaces/Leaderboard.interface';
 
 const checkResults = (acc: TMatchesResults, teamGoals: number, opponentsGoals: number) => {
   if (teamGoals > opponentsGoals) acc.totalVictories += 1;
@@ -24,7 +25,8 @@ const getMatches = (teamMatches: IMatchWithTeam[], home: boolean) => {
   ), { totalVictories: 0, totalDraws: 0, totalLosses: 0, goalsFavor: 0, goalsOwn: 0 });
 };
 
-export default (teamMatches: IMatchWithTeam[], home: boolean): TMatchesResultsWithTotals => {
+export const matchesData = (teamMatches:
+IMatchWithTeam[], home: boolean): TMatchesResultsWithTotals => {
   const matches = getMatches(teamMatches, home);
   const totalGames = teamMatches.length;
   const totalPoints = (matches.totalVictories * 3) + matches.totalDraws;
@@ -36,4 +38,13 @@ export default (teamMatches: IMatchWithTeam[], home: boolean): TMatchesResultsWi
     goalsBalance: matches.goalsFavor - matches.goalsOwn,
     efficiency: Number(((totalPoints / (totalGames * 3)) * 100).toFixed(2)),
   });
+};
+
+export const sortLeaderboard = (a: ILeaderboard, b: ILeaderboard) => {
+  let result = b.totalPoints - a.totalPoints;
+  if (result === 0) result = b.totalVictories - a.totalVictories;
+  if (result === 0) result = b.goalsBalance - a.goalsBalance;
+  if (result === 0) result = b.goalsFavor - a.goalsFavor;
+  if (result === 0) result = b.goalsOwn - a.goalsOwn;
+  return result;
 };

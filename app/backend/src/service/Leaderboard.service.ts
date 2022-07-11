@@ -8,4 +8,9 @@ export default class LeaderboardService implements ILeaderboardService {
     const leaderboard = await this._model.getHomeLeaderboard();
     return leaderboard;
   }
+
+  async getAwayLeaderboard(): Promise<ILeaderboard[]> {
+    const leaderboard = await this._model.getAwayLeaderboard();
+    return leaderboard;
+  }
 }
