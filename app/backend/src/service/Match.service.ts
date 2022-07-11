@@ -4,14 +4,14 @@ import Match from '../database/models/Match.model';
 import {
   IMatchModel,
   IMatchService,
-  returnedMatch,
+  IReturnedMatch,
   TUpdateGoals } from '../interfaces/Match.interface';
 import ErrorHandler from '../utils/ErrorHandler';
 
 export default class MatchService implements IMatchService {
   constructor(private _model: IMatchModel, private _teamModel: ITeamModel) { }
 
-  async getAll(query: boolean | undefined): Promise<returnedMatch[]> {
+  async getAll(query: boolean | undefined): Promise<IReturnedMatch[]> {
     const matches = await this._model.getAll(query);
 
     return matches;

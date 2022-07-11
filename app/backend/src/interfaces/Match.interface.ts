@@ -1,6 +1,6 @@
 import Match from '../database/models/Match.model';
 
-export interface returnedMatch extends Match {
+export interface IReturnedMatch extends Match {
   teamHome: {
     teamName: string
   },
@@ -11,15 +11,24 @@ export interface returnedMatch extends Match {
 
 export type TUpdateGoals = Omit<Match, 'id' | 'inProgress' | 'homeTeam' | 'awayTeam'>;
 
+export interface IMatchWithTeam {
+  id: number;
+  homeTeam: number;
+  homeTeamGoals: number;
+  awayTeam: number;
+  awayTeamGoals: number;
+  inProgress: boolean;
+}
+
 export interface IMatchModel {
-  getAll(inProgress: boolean | undefined): Promise<returnedMatch[]>
+  getAll(inProgress: boolean | undefined): Promise<IReturnedMatch[]>
   create(data: Omit<Match, 'id' | 'inProgress'>): Promise<Match>
   updateFinished(id: number): Promise<void>
   updateGoals(id:number, data: TUpdateGoals): Promise<void>
 }
 
 export interface IMatchService {
-  getAll(query: boolean | undefined): Promise<returnedMatch[]>
+  getAll(query: boolean | undefined): Promise<IReturnedMatch[]>
   create(data: Omit<Match, 'id' | 'inProgress'>): Promise<Match>
   updateFinished(id: number): Promise<void>
   updateGoals(id:number, data: TUpdateGoals): Promise<void>

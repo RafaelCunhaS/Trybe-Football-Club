@@ -1,10 +1,26 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
-// import Match from './Match.model';
 
 class Team extends Model {
   public id!: number;
   public teamName!: string;
+  teamHome: {
+    id: number;
+    homeTeam: number;
+    homeTeamGoals: number;
+    awayTeam: number;
+    awayTeamGoals: number;
+    inProgress: boolean;
+  }[];
+
+  teamAway: {
+    id: number;
+    homeTeam: number;
+    homeTeamGoals: number;
+    awayTeam: number;
+    awayTeamGoals: number;
+    inProgress: boolean;
+  }[];
 }
 
 Team.init({
@@ -23,7 +39,5 @@ Team.init({
   modelName: 'teams',
   timestamps: false,
 });
-
-// Team.hasMany(Match, { foreignKey: 'id', as: 'matches' });
 
 export default Team;
