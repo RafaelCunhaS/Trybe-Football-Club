@@ -11,7 +11,7 @@ It is also possible to create, update or delete (__CRUD__) a match, but only an 
 
 ### Dependencies needed to run the project
 
- - Dockerfile -> Your docker-compose needs to be at version 1.29 or higher [See the documentation for how to update it](https://docs.docker.com/compose/install/)
+ - Docker-compose -> Your docker-compose needs to be at version 1.29 or higher [See the documentation for how to update it](https://docs.docker.com/compose/install/)
 
 ### How to run the project
 
