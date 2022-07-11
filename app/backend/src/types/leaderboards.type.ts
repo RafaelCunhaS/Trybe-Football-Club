@@ -1,6 +1,6 @@
 import { ILeaderboard } from '../interfaces/Leaderboard.interface';
 
-export type TMatchesResultsWithTotals = Omit<ILeaderboard, 'name'>;
+export type TTeamData = Omit<ILeaderboard, 'name'>;
 
-export type TMatchesResults = Omit<TMatchesResultsWithTotals,
+export type TMatchesResults = Omit<TTeamData,
 'totalPoints' | 'totalGames' | 'goalsBalance' | 'efficiency'>;

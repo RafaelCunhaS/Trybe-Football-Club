@@ -4,23 +4,6 @@ import db from '.';
 class Team extends Model {
   public id!: number;
   public teamName!: string;
-  teamHome: {
-    id: number;
-    homeTeam: number;
-    homeTeamGoals: number;
-    awayTeam: number;
-    awayTeamGoals: number;
-    inProgress: boolean;
-  }[];
-
-  teamAway: {
-    id: number;
-    homeTeam: number;
-    homeTeamGoals: number;
-    awayTeam: number;
-    awayTeamGoals: number;
-    inProgress: boolean;
-  }[];
 }
 
 Team.init({

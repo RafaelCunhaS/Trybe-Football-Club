@@ -3,7 +3,7 @@ import Team from '../database/models/Team.model';
 
 export interface ITeamWithMatches extends Team {
   teamHome: Match[]
-  awayTeam: Match[]
+  teamAway: Match[]
 }
 
 export interface ITeamModel {
