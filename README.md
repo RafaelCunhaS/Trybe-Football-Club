@@ -1,4 +1,4 @@
-## Trybe Football Club
+# Trybe Football Club
 
 Back-end project made while studying at Trybe, a web development school.
 
@@ -9,11 +9,11 @@ The front-end was ready, so my function was to work on the back-end modeling the
 
 It is also possible to create, update or delete (__CRUD__) a match, but only an administrator is able to do so, and a token(__jsonwebtoken__) is required, therefore the person needs to be logged on to be able to make these changes.
 
-### Dependencies needed to run the project
+### 📋 Dependencies needed to run the project
 
  - Docker-compose -> Your docker-compose needs to be at version 1.29 or higher [See the documentation for how to update it](https://docs.docker.com/compose/install/)
 
-### How to run the project
+### 🔧 How to run the project
 
 ```bash
     # Clone the repository
